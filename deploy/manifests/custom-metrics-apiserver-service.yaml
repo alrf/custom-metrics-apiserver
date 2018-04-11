@@ -9,3 +9,4 @@ spec:
     targetPort: 6443
   selector:
     app: custom-metrics-apiserver
+  type: LoadBalancer
