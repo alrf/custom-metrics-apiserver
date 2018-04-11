@@ -9,6 +9,8 @@ Example Deployment
    documentation](https://github.com/kubernetes-incubator/apiserver-builder/blob/master/docs/concepts/auth.md)
    in the apiserver-builder repository.
 
+   `kubectl -n custom-metrics create secret tls cm-adapter-serving-certs --cert=apiserver.local.config/certificates/serving.crt --key=apiserver.local.config/certificates/serving.key`
+
 3. `kubectl create namespace custom-metrics` to ensure the namespace we choose to install the custom metrics adapter in.
 
 4. `kubectl create -f manifests/`, modifying as necessary to

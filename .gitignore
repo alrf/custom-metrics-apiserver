@@ -3,3 +3,4 @@
 vendor
 _output
 apiserver.local.config/
+manifest-tool

@@ -19,12 +19,15 @@ spec:
       serviceAccountName: custom-metrics-apiserver
       containers:
       - name: custom-metrics-apiserver
-        image: stevemcquaid/custom-metrics-apiserver
+        image: stevemcquaid/custom-metrics-apiserver-bash:latest
+        imagePullPolicy: Always
+        # command: [ "/bin/sh", "-c", "--" ]
+        # args: [ "while true; do sleep 30; done;" ]
         args:
         - /sample-adapter
         - --secure-port=6443
-        - --tls-cert-file=/var/run/serving-cert/serving.crt
-        - --tls-private-key-file=/var/run/serving-cert/serving.key
+        - --tls-cert-file=/var/run/serving-cert/tls.crt
+        - --tls-private-key-file=/var/run/serving-cert/tls.key
         - --logtostderr=true
         - --v=10
         ports:
