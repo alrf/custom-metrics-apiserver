@@ -5,7 +5,7 @@
   * Build the code: `make docker-build`
   * Create the necessary resources: `kubectl apply -f deploy/manifests/`
   * Create the necessary Secrets: `kubectl -n custom-metrics create secret tls cm-adapter-serving-certs --cert=apiserver.local.config/certificates/serving.crt --key=apiserver.local.config/certificates/serving.key`
-  * See if our server actually works: `kubectl run -it --rm toolbox --restart=Never --image stevemcquaid/toolbox:latest -- curl -sSk 'https://custom-metrics-apiserver.custom-metrics/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/service/flask/queue-length'`
+  * See if our server actually works: `kubectl run -it --rm toolbox --restart=Never --image stevemcquaid/toolbox:latest -- curl -sSk 'https://custom-metrics-apiserver.custom-metrics/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/services/flask/queue-length'`
 
 
 

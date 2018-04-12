@@ -29,7 +29,7 @@ spec:
         - --tls-cert-file=/var/run/serving-cert/tls.crt
         - --tls-private-key-file=/var/run/serving-cert/tls.key
         - --logtostderr=true
-        - --v=10
+        - --v=8
         ports:
         - containerPort: 6443
         volumeMounts:
