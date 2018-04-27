@@ -9,9 +9,15 @@ Example Deployment
 
 4. `kubectl -n custom-metrics create secret tls cm-adapter-serving-certs --cert=/tmp/serving.crt --key=/tmp/serving.key`
 
-5. `kubectl create -f manifests/`
+5. `kubectl apply -f manifests/`
 
 ```
 $ kubectl api-versions |grep cus
 custom.metrics.k8s.io/v1beta1
 ```
+
+
+Build flask service:
+
+1. `kubectl apply -f scaler/flask.yaml` - flask
+2. `kubectl apply -f scaler/horizontalpodautoscaler.yaml` - HPA
