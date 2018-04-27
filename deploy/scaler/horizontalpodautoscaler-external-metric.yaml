@@ -4,17 +4,16 @@ metadata:
   name: flask-hpa
 spec:
   scaleTargetRef:
-#    apiVersion: extensions/v1beta1
-    apiVersion: external.metrics.k8s.io/v1beta1
+    apiVersion: extensions/v1beta1
     kind: Deployment
     name: flask
   minReplicas: 2
   maxReplicas: 10
   metrics:
-  - type: Object
-    object:
-      target:
-        kind: Service
-        name: flask
+  - type: External
+    external:
       metricName: other-external-metric
-      targetValue: 50
+#      metricSelector:
+#        matchLabels:
+#          queue: worker_tasks
+      targetValue: 30
