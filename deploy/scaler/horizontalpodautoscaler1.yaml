@@ -4,6 +4,8 @@ metadata:
   name: flask-hpa
 spec:
   scaleTargetRef:
+#    apiVersion: extensions/v1beta1
+    apiVersion: external.metrics.k8s.io/v1beta1
     kind: Deployment
     name: flask
   minReplicas: 2
@@ -14,5 +16,5 @@ spec:
       target:
         kind: Service
         name: flask
-      metricName: queue-length
-      targetValue: 5000m
+      metricName: other-external-metric
+      targetValue: 50
