@@ -2,6 +2,13 @@ Example Deployment
 ==================
 
 1. Make sure you've built the included Dockerfile with `make docker-build`.
+Push your image to Docker Hub:
+```
+docker login
+```
+```
+docker push alrf/custom-metrics-apiserver-amd64
+```
    
 2. `kubectl create namespace custom-metrics`
 
@@ -16,6 +23,9 @@ $ kubectl api-versions |grep cus
 custom.metrics.k8s.io/v1beta1
 ```
 
+```
+kubectl get --raw /apis/external.metrics.k8s.io/v1beta1/namespaces/default/mongo_queue
+```
 
 Build flask service:
 
