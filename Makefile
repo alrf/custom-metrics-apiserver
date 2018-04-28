@@ -1,4 +1,5 @@
-REGISTRY?=stevemcquaid
+#REGISTRY?=stevemcquaid
+REGISTRY?=alrf
 IMAGE?=custom-metrics-apiserver
 TEMP_DIR:=$(shell mktemp -d)
 ARCH?=amd64

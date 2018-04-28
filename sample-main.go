@@ -21,7 +21,7 @@ import (
 	"os"
 	"runtime"
 
-	"github.com/stevemcquaid/custom-metrics-apiserver/pkg/sample-cmd/server"
+	"github.com/alrf/custom-metrics-apiserver/pkg/sample-cmd/server"
 	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/apiserver/pkg/util/logs"
 )

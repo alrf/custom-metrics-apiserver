@@ -30,7 +30,7 @@ import (
 
 	"github.com/kubernetes-incubator/custom-metrics-apiserver/pkg/cmd/server"
 	"github.com/kubernetes-incubator/custom-metrics-apiserver/pkg/dynamicmapper"
-	"github.com/stevemcquaid/custom-metrics-apiserver/pkg/sample-cmd/provider"
+	"github.com/alrf/custom-metrics-apiserver/pkg/sample-cmd/provider"
 )
 
 // NewCommandStartMaster provides a CLI handler for 'start master' command
