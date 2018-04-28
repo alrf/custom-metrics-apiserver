@@ -41,6 +41,7 @@ type externalMetric struct {
 }
 
 var (
+	my_metric := 555
 	testingMetrics = []externalMetric{
 		{
 			info: provider.ExternalMetricInfo{
@@ -91,7 +92,7 @@ var (
 			value: external_metrics.ExternalMetricValue{
 				MetricName:   "mongo_queue",
 				MetricLabels: map[string]string{},
-				Value:        *resource.NewQuantity(777, resource.DecimalSI),
+				Value:        *resource.NewQuantity(my_metric, resource.DecimalSI),
 			},
 		},
 	}
