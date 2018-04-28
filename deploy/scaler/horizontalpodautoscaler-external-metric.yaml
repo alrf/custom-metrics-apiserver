@@ -16,4 +16,4 @@ spec:
 #      metricSelector:
 #        matchLabels:
 #          queue: worker_tasks
-      targetValue: 30
+      targetValue: 50
