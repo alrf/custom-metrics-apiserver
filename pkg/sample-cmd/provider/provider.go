@@ -83,6 +83,17 @@ var (
 				Value:        *resource.NewQuantity(44, resource.DecimalSI),
 			},
 		},
+		{
+			info: provider.ExternalMetricInfo{
+				Metric: "mongo_queue",
+				Labels: map[string]string{},
+			},
+			value: external_metrics.ExternalMetricValue{
+				MetricName:   "mongo_queue",
+				MetricLabels: map[string]string{},
+				Value:        *resource.NewQuantity(777, resource.DecimalSI),
+			},
+		},
 	}
 )
 
