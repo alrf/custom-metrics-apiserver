@@ -35,7 +35,6 @@ import (
 	"k8s.io/metrics/pkg/apis/external_metrics"
 )
 
-my_metric := 555
 
 type externalMetric struct {
 	info  provider.ExternalMetricInfo
