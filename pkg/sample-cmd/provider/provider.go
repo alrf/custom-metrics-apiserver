@@ -35,13 +35,14 @@ import (
 	"k8s.io/metrics/pkg/apis/external_metrics"
 )
 
+my_metric := 555
+
 type externalMetric struct {
 	info  provider.ExternalMetricInfo
 	value external_metrics.ExternalMetricValue
 }
 
 var (
-	my_metric := 555
 	testingMetrics = []externalMetric{
 		{
 			info: provider.ExternalMetricInfo{
