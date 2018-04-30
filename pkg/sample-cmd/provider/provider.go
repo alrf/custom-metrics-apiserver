@@ -19,8 +19,6 @@ package provider
 import (
 	"fmt"
 	"time"
-//	"labix.org/v2/mgo"
-//	"labix.org/v2/mgo/bson"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 
@@ -114,15 +112,17 @@ var (
     IsDrop = true
 )
 
+
 func getMongoQueue() int64 {
     var x int64 = 777
-    /*
-    session, err := mgo.Dial("100.66.73.62")
-	if err != nil {
-		panic(err)
-	}
-	defer session.Close()
-	session.SetMode(mgo.Monotonic, true)
+
+    session, err := mgo.Dial("100.96.3.23:27017")
+    if err != nil {
+	panic(err)
+    }
+    defer session.Close()
+
+    session.SetMode(mgo.Monotonic, true)
 
 
 	// Drop Database
@@ -161,8 +161,9 @@ func getMongoQueue() int64 {
 	if err != nil {
 	    panic(err)
 	}
+	fmt.Println("!!!!!!!")
 	fmt.Println("Phone", result)
-	*/
+	fmt.Println("!!!!!!!")
     return x
 //    return result
 }
