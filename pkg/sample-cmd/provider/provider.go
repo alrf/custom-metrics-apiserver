@@ -19,6 +19,10 @@ package provider
 import (
 	"fmt"
 	"time"
+//	"labix.org/v2/mgo"
+//	"labix.org/v2/mgo/bson"
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 
 	"github.com/golang/glog"
 	apierr "k8s.io/apimachinery/pkg/api/errors"
@@ -98,9 +102,69 @@ var (
 	}
 )
 
+
+type Person struct {
+    ID        bson.ObjectId `bson:"_id,omitempty"`
+    Name      string
+    Phone     string
+    Timestamp time.Time
+}
+
+var (
+    IsDrop = true
+)
+
 func getMongoQueue() int64 {
     var x int64 = 777
+    /*
+    session, err := mgo.Dial("100.66.73.62")
+	if err != nil {
+		panic(err)
+	}
+	defer session.Close()
+	session.SetMode(mgo.Monotonic, true)
+
+
+	// Drop Database
+	if IsDrop {
+	    err = session.DB("test").DropDatabase()
+	    if err != nil {
+		panic(err)
+	    }
+	}
+
+	// Collection People
+	c := session.DB("test").C("people")
+	// Index
+	index := mgo.Index{
+		    Key:        []string{"name", "phone"},
+		    Unique:     true,
+		    DropDups:   true,
+		    Background: true,
+		    Sparse:     true,
+	}
+
+	err = c.EnsureIndex(index)
+	if err != nil {
+	    panic(err)
+	}
+
+	// Insert Datas
+	err = c.Insert(&Person{Name: "Ale", Phone: "555", Timestamp: time.Now()},
+		&Person{Name: "Cla", Phone: "777", Timestamp: time.Now()})
+	if err != nil {
+		panic(err)
+	}
+	// Query One
+	result := Person{}
+	err = c.Find(bson.M{"name": "Ale"}).Select(bson.M{"phone": 0}).One(&result)
+	if err != nil {
+	    panic(err)
+	}
+	fmt.Println("Phone", result)
+	*/
     return x
+//    return result
 }
 
 type testingProvider struct {
