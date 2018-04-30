@@ -27,6 +27,9 @@ Update cluster with creation:
 kops update cluster $NAME --yes
 ```
 
+**Mongo cluster MUST be initialized before run next commands.**
+
+
 
 1. Make sure you've built the included Dockerfile with `make docker-build`.
 Push your image to Docker Hub:
@@ -55,6 +58,7 @@ kubectl get svc --all-namespaces
 ```
 
 
+The external metric name is `mongo-queue`:
 ```
 kubectl get --raw /apis/external.metrics.k8s.io/v1beta1/namespaces/default/mongo-queue
 ```
