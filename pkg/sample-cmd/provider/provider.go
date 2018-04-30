@@ -104,7 +104,7 @@ var (
 type Person struct {
     ID        bson.ObjectId `bson:"_id,omitempty"`
     Name      string
-    Phone     string
+    Value     int64
     Timestamp time.Time
 }
 
@@ -114,7 +114,7 @@ var (
 
 
 func getMongoQueue() int64 {
-    var x int64 = 777
+//    var x int64 = 777
 
     session, err := mgo.Dial("100.96.3.23:27017")
     if err != nil {
@@ -137,7 +137,7 @@ func getMongoQueue() int64 {
 	c := session.DB("test").C("people")
 	// Index
 	index := mgo.Index{
-		    Key:        []string{"name", "phone"},
+		    Key:        []string{"name", "value"},
 		    Unique:     true,
 		    DropDups:   true,
 		    Background: true,
@@ -150,22 +150,22 @@ func getMongoQueue() int64 {
 	}
 
 	// Insert Datas
-	err = c.Insert(&Person{Name: "Ale", Phone: "555", Timestamp: time.Now()},
-		&Person{Name: "Cla", Phone: "777", Timestamp: time.Now()})
+	err = c.Insert(&Person{Name: "Ale", Value: 555, Timestamp: time.Now()},
+		&Person{Name: "Cla", Value: 777, Timestamp: time.Now()})
 	if err != nil {
 		panic(err)
 	}
 	// Query One
 	result := Person{}
-	err = c.Find(bson.M{"name": "Ale"}).Select(bson.M{"phone": 0}).One(&result)
+	err = c.Find(bson.M{"name": "Ale"}).One(&result)
 	if err != nil {
 	    panic(err)
 	}
 	fmt.Println("!!!!!!!")
-	fmt.Println("Phone", result)
+	fmt.Println("Value all", result)
+	fmt.Println("Value", result.Value)
 	fmt.Println("!!!!!!!")
-    return x
-//    return result
+    return result.Value
 }
 
 type testingProvider struct {
