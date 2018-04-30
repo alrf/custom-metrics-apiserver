@@ -16,7 +16,7 @@ docker push alrf/custom-metrics-apiserver-amd64
 
 4. `kubectl -n custom-metrics create secret tls cm-adapter-serving-certs --cert=/tmp/serving.crt --key=/tmp/serving.key`
 
-5. `kubectl apply -f manifests/`
+5. `kubectl apply -f deploy/manifests`
 
 ```
 $ kubectl api-versions |grep cus
@@ -24,7 +24,7 @@ custom.metrics.k8s.io/v1beta1
 ```
 
 ```
-kubectl get --raw /apis/external.metrics.k8s.io/v1beta1/namespaces/default/mongo_queue
+kubectl get --raw /apis/external.metrics.k8s.io/v1beta1/namespaces/default/mongo-queue
 ```
 
 Build flask service:
