@@ -86,17 +86,22 @@ var (
 		},
 		{
 			info: provider.ExternalMetricInfo{
-				Metric: "mongo_queue",
+				Metric: "mongo-queue",
 				Labels: map[string]string{},
 			},
 			value: external_metrics.ExternalMetricValue{
-				MetricName:   "mongo_queue",
+				MetricName:   "mongo-queue",
 				MetricLabels: map[string]string{},
-				Value:        *resource.NewQuantity(my_metric, resource.DecimalSI),
+				Value:        *resource.NewQuantity(getMongoQueue(), resource.DecimalSI),
 			},
 		},
 	}
 )
+
+func getMongoQueue() int64 {
+    var x int64 = 777
+    return x
+}
 
 type testingProvider struct {
 	client dynamic.ClientPool
