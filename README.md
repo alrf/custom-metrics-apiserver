@@ -24,6 +24,11 @@ custom.metrics.k8s.io/v1beta1
 ```
 
 ```
+kubectl get svc --all-namespaces
+```
+
+
+```
 kubectl get --raw /apis/external.metrics.k8s.io/v1beta1/namespaces/default/mongo-queue
 ```
 
