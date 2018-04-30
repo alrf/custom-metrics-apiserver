@@ -1,6 +1,33 @@
 Example Deployment
 ==================
 
+Create k8s cluster using kops, for example:
+
+```
+kops create cluster --zones=us-east-2a --image=ami-e1496384 --node-count=3 --node-size=t2.large --master-size=t2.small $NAME --cloud=aws --topology=public --kubernetes-version=1.10.1
+```
+`$NAME` - is your cluster name.
+
+Edit the cluster by:
+```
+kops edit cluster $NAME
+```
+Add the following lines into `spec`:
+```
+  kubeControllerManager:
+    horizontalPodAutoscalerSyncPeriod: 15s
+    horizontalPodAutoscalerUseRestClients: true
+  kubelet:
+    enableCustomMetrics: true
+```
+Save the cluster settings. 
+Update cluster with creation:
+
+```
+kops update cluster $NAME --yes
+```
+
+
 1. Make sure you've built the included Dockerfile with `make docker-build`.
 Push your image to Docker Hub:
 ```
