@@ -116,7 +116,7 @@ var (
 func getMongoQueue() int64 {
 //    var x int64 = 777
 
-    session, err := mgo.Dial("100.96.3.23:27017")
+    session, err := mgo.Dial("mongo.default.svc.cluster.local:27017")
     if err != nil {
 	panic(err)
     }
