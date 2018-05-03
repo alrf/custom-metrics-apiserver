@@ -1,5 +1,5 @@
-hash: 1d9d2ac603c45656479ca1dedb7a00fa876ba2c9eceb37b6986d8d0683c17ff7
-updated: 2018-05-03T07:14:29.160604646Z
+hash: 75802a6aaa352bc41d79c50b79483a233c2c80b9305d9be07b62da734c99ccb0
+updated: 2018-04-11T17:35:52.778858916-04:00
 imports:
 - name: bitbucket.org/ww/goautoneg
   version: 75cd24fc2f2c2a2088577d12123ddee5f54e0675
@@ -144,12 +144,14 @@ imports:
   version: a0d98a5f288019575c6d1f4bb1573fef2d1fcdc4
   subpackages:
   - simplelru
+- name: github.com/howeyc/gopass
+  version: bf9dde6d0d2c004a008c27aaee91170c786f6db8
 - name: github.com/imdario/mergo
   version: 6633656539c1639d9d78127b7d47c622b5d7b6dc
 - name: github.com/inconshreveable/mousetrap
   version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
 - name: github.com/json-iterator/go
-  version: 2ddf6d758266fcb080a4f9e054b9f292c85e6798
+  version: 13f86432b882000a51c6e610c620974462691a97
 - name: github.com/kubernetes-incubator/custom-metrics-apiserver
   version: e61f72fec56ab519d74ebd396cd3fcf31b084558
   subpackages:
@@ -170,10 +172,6 @@ imports:
   version: fc2b8d3a73c4867e51861bbdd5ae3c1f0869dd6a
   subpackages:
   - pbutil
-- name: github.com/modern-go/concurrent
-  version: bacd9c7ef1dd9b15be4a9909b8ac7a4e313eec94
-- name: github.com/modern-go/reflect2
-  version: 05fbef0ca5da472bbf96c9322b84a53edc03c9fd
 - name: github.com/NYTimes/gziphandler
   version: 56545f4a5d46df9a6648819d1664c3a03a13ffdb
 - name: github.com/pborman/uuid
@@ -203,7 +201,7 @@ imports:
 - name: github.com/spf13/cobra
   version: c439c4fa093711d42e1b01acb1235b52004753c1
 - name: github.com/spf13/pflag
-  version: 583c0c0531f06d5278b7d917446061adc344b5cd
+  version: 4c012f6dcd9546820e378d0bdda4d8fc772cdfea
 - name: github.com/ugorji/go
   version: ded73eae5db7e7a0ef6f55aace87a2873c5d2b74
   subpackages:
@@ -282,19 +280,12 @@ imports:
   - transport
 - name: gopkg.in/inf.v0
   version: 3887ee99ecf07df5b447e9b00d9c0b2adaa9f3e4
-- name: gopkg.in/mgo.v2
-  version: 3f83fa5005286a7fe593b055f0d7771a7dce4655
-  subpackages:
-  - bson
-  - internal/json
-  - internal/sasl
-  - internal/scram
 - name: gopkg.in/natefinch/lumberjack.v2
   version: 20b71e5b60d756d3d2f80def009790325acc2b23
 - name: gopkg.in/yaml.v2
   version: 670d4cfef0544295bc27a114dbac37980d83185a
 - name: k8s.io/api
-  version: b7d77fa220f5130ec63c2ca7167dd9653449c64d
+  version: 7e796de92438aede7cb5d6bcf6c10f4fa65db560
   subpackages:
   - admission/v1beta1
   - admissionregistration/v1alpha1
@@ -326,7 +317,7 @@ imports:
   - storage/v1alpha1
   - storage/v1beta1
 - name: k8s.io/apimachinery
-  version: 6426d21f392c6d0e710af98bdfe6fb7334b3e11a
+  version: b94e5e603d6eb10ccb65a504f538ca1ae4ef92df
   subpackages:
   - pkg/api/equality
   - pkg/api/errors
@@ -380,7 +371,7 @@ imports:
   - third_party/forked/golang/json
   - third_party/forked/golang/reflect
 - name: k8s.io/apiserver
-  version: e9bd8cfeea6d7ea1d961b3081992db1c9c55db1f
+  version: f46ec09bda7a6338442cbd3926ddb97b801199bb
   subpackages:
   - pkg/admission
   - pkg/admission/configuration
@@ -392,12 +383,12 @@ imports:
   - pkg/admission/plugin/webhook/config/apis/webhookadmission
   - pkg/admission/plugin/webhook/config/apis/webhookadmission/v1alpha1
   - pkg/admission/plugin/webhook/errors
-  - pkg/admission/plugin/webhook/generic
   - pkg/admission/plugin/webhook/mutating
   - pkg/admission/plugin/webhook/namespace
   - pkg/admission/plugin/webhook/request
   - pkg/admission/plugin/webhook/rules
   - pkg/admission/plugin/webhook/validating
+  - pkg/admission/plugin/webhook/versioned
   - pkg/apis/apiserver
   - pkg/apis/apiserver/install
   - pkg/apis/apiserver/v1alpha1
@@ -466,12 +457,11 @@ imports:
   - pkg/util/wsstream
   - plugin/pkg/audit/buffered
   - plugin/pkg/audit/log
-  - plugin/pkg/audit/truncate
   - plugin/pkg/audit/webhook
   - plugin/pkg/authenticator/token/webhook
   - plugin/pkg/authorizer/webhook
 - name: k8s.io/client-go
-  version: 01d6a1350dd5c61a498fd3a5bdafd9151cac4e9a
+  version: 30089d3674f3dd2ecf53eb0505b40ab05e3ad04f
   subpackages:
   - discovery
   - dynamic
@@ -604,7 +594,7 @@ imports:
   - pkg/util
   - pkg/util/proto
 - name: k8s.io/metrics
-  version: 40851981595ae3d44754b7b8bfc6b2e349a6ee0e
+  version: 4cc74194f563d1ac90a61b654083a4da01c1ae61
   subpackages:
   - pkg/apis/custom_metrics
   - pkg/apis/custom_metrics/install
