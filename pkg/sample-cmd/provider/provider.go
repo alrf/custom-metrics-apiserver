@@ -109,9 +109,8 @@ type Person struct {
 }
 
 var (
-    IsDrop = true
+    IsDrop = false
 )
-
 
 func getMongoQueue() int64 {
 //    var x int64 = 777
@@ -124,24 +123,23 @@ func getMongoQueue() int64 {
 
     session.SetMode(mgo.Monotonic, true)
 
-
-	// Drop Database
-	if IsDrop {
-	    err = session.DB("test").DropDatabase()
-	    if err != nil {
-		panic(err)
-	    }
+    // Drop Database
+    if IsDrop {
+	err = session.DB("test").DropDatabase()
+	if err != nil {
+	    panic(err)
 	}
+    }
 
-	// Collection People
+        // Collection People
 	c := session.DB("test").C("people")
-	// Index
+        // Index
 	index := mgo.Index{
-		    Key:        []string{"name", "value"},
-		    Unique:     true,
-		    DropDups:   true,
-		    Background: true,
-		    Sparse:     true,
+	    Key:        []string{"name", "value"},
+	    Unique:     true,
+	    DropDups:   true,
+	    Background: true,
+	    Sparse:     true,
 	}
 
 	err = c.EnsureIndex(index)
@@ -149,22 +147,26 @@ func getMongoQueue() int64 {
 	    panic(err)
 	}
 
+    if IsDrop {
 	// Insert Datas
 	err = c.Insert(&Person{Name: "Ale", Value: 555, Timestamp: time.Now()},
 		&Person{Name: "Cla", Value: 777, Timestamp: time.Now()})
 	if err != nil {
 		panic(err)
 	}
-	// Query One
-	result := Person{}
-	err = c.Find(bson.M{"name": "Ale"}).One(&result)
-	if err != nil {
-	    panic(err)
-	}
-	fmt.Println("!!!!!!!")
-	fmt.Println("Value all", result)
-	fmt.Println("Value", result.Value)
-	fmt.Println("!!!!!!!")
+    }
+
+//    c := session.DB("test").C("people")
+    // Query One
+    result := Person{}
+    err = c.Find(bson.M{"name": "Ale"}).One(&result)
+    if err != nil {
+        panic(err)
+    }
+    fmt.Println("!!!!!!!")
+    fmt.Println("Value all", result)
+    fmt.Println("Value", result.Value)
+    fmt.Println("!!!!!!!")
     return result.Value
 }
 
@@ -201,7 +203,8 @@ func (p *testingProvider) valueFor(groupResource schema.GroupResource, metricNam
 	value += 1
 	p.values[info] = value
 
-	return value, nil
+//	return value, nil
+	return getMongoQueue(), nil
 }
 
 func (p *testingProvider) metricFor(value int64, groupResource schema.GroupResource, namespace string, name string, metricName string) (*custom_metrics.MetricValue, error) {
@@ -219,7 +222,8 @@ func (p *testingProvider) metricFor(value int64, groupResource schema.GroupResou
 		},
 		MetricName: metricName,
 		Timestamp:  metav1.Time{time.Now()},
-		Value:      *resource.NewMilliQuantity(value*100, resource.DecimalSI),
+		//Value:      *resource.NewMilliQuantity(value*100, resource.DecimalSI),
+		Value:      *resource.NewQuantity(value, resource.DecimalSI),
 	}, nil
 }
 
@@ -295,6 +299,9 @@ func (p *testingProvider) GetNamespacedMetricByName(groupResource schema.GroupRe
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println("!!!")
+	fmt.Println(value)
+	fmt.Println("!!!")
 	return p.metricFor(value, groupResource, namespace, name, metricName)
 }
 
