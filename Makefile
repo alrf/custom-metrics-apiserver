@@ -11,8 +11,7 @@ VENDOR_DOCKERIZED=1
 VERSION?=latest
 
 ifeq ($(ARCH),amd64)
-#	BASEIMAGE?=busybox
-	BASEIMAGE?=mongo:3.2
+	BASEIMAGE?=busybox
 endif
 ifeq ($(ARCH),arm)
 	BASEIMAGE?=armhf/busybox
