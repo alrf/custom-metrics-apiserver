@@ -30,7 +30,7 @@ kops update cluster $NAME --yes
 `deploy/manifests` directory contains yml-files for creation the custom and external metrics for k8s API.  
 `deploy/scaler` directory contains yml-files for creation the test-deployment (based on flask).
 
-We use external metric `mongo-queue` for HPA.  
+Using the external metric `mongo-queue` for HPA.  
 **Mongo cluster MUST be initialized before run next commands.**
 
 Clone this repo.  
