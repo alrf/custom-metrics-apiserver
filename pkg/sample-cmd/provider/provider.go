@@ -94,7 +94,7 @@ var (
 			value: external_metrics.ExternalMetricValue{
 				MetricName:   "mongo-queue",
 				MetricLabels: map[string]string{},
-				Value:        *resource.NewQuantity(getMongoQueue(), resource.DecimalSI),
+				Value:        *resource.NewQuantity(0, resource.DecimalSI),
 			},
 		},
 	}
@@ -131,21 +131,21 @@ func getMongoQueue() int64 {
 	}
     }
 
-        // Collection People
-	c := session.DB("test").C("people")
-        // Index
-	index := mgo.Index{
-	    Key:        []string{"name", "value"},
-	    Unique:     true,
-	    DropDups:   true,
-	    Background: true,
-	    Sparse:     true,
-	}
+    // Collection People
+    c := session.DB("test").C("people")
+    // Index
+    index := mgo.Index{
+	Key:        []string{"name", "value"},
+	Unique:     true,
+	DropDups:   true,
+	Background: true,
+	Sparse:     true,
+    }
 
-	err = c.EnsureIndex(index)
-	if err != nil {
-	    panic(err)
-	}
+    err = c.EnsureIndex(index)
+    if err != nil {
+	panic(err)
+    }
 
     if IsDrop {
 	// Insert Datas
@@ -156,7 +156,6 @@ func getMongoQueue() int64 {
 	}
     }
 
-//    c := session.DB("test").C("people")
     // Query One
     result := Person{}
     err = c.Find(bson.M{"name": "Ale"}).One(&result)
@@ -203,8 +202,7 @@ func (p *testingProvider) valueFor(groupResource schema.GroupResource, metricNam
 	value += 1
 	p.values[info] = value
 
-//	return value, nil
-	return getMongoQueue(), nil
+	return value, nil
 }
 
 func (p *testingProvider) metricFor(value int64, groupResource schema.GroupResource, namespace string, name string, metricName string) (*custom_metrics.MetricValue, error) {
@@ -299,9 +297,9 @@ func (p *testingProvider) GetNamespacedMetricByName(groupResource schema.GroupRe
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println("!!!")
-	fmt.Println(value)
-	fmt.Println("!!!")
+	//fmt.Println("!!!")
+	//fmt.Println(value)
+	//fmt.Println("!!!")
 	return p.metricFor(value, groupResource, namespace, name, metricName)
 }
 
@@ -359,6 +357,9 @@ func (p *testingProvider) GetExternalMetric(namespace string, metricName string,
 		if metric.info.Metric == metricName &&
 			metricSelector.Matches(labels.Set(metric.info.Labels)) {
 			metricValue := metric.value
+			if metricName == "mongo-queue" {
+			    metricValue.Value = *resource.NewQuantity(getMongoQueue(), resource.DecimalSI)
+			}
 			metricValue.Timestamp = metav1.Now()
 			matchingMetrics = append(matchingMetrics, metricValue)
 		}

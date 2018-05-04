@@ -12,8 +12,8 @@ spec:
   metrics:
   - type: External
     external:
-      metricName: other-external-metric
+      metricName: mongo-queue
 #      metricSelector:
 #        matchLabels:
 #          queue: worker_tasks
-      targetValue: 50
+      targetValue: 20
