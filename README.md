@@ -27,13 +27,17 @@ Update cluster with creation:
 kops update cluster $NAME --yes
 ```
 
-**Mongo cluster MUST be initialized before run next commands.**
+`deploy/manifests` directory contains yml-files for creation the custom and external metrics for k8s API.  
+`deploy/scaler` directory contains yml-files for creation the test-deployment (based on flask).
 
+We use external metric `mongo-queue` for HPA.  
+**Mongo cluster MUST be initialized before run next commands.**
 
 Clone this repo.  
 Switch to dev branch: `git checkout dev`
 
-1. Make sure you've built the included Dockerfile with `make docker-build`.
+1. Any changes in `pkg/sample-cmd/provider/provider.go` require re-build the Docker image.  
+So, make sure you've built the new image by `make docker-build`.  
 Push your image to Docker Hub:
 ```
 docker login
@@ -51,7 +55,7 @@ docker push alrf/custom-metrics-apiserver-amd64
 5. `kubectl apply -f deploy/manifests`
 
 ```
-$ kubectl api-versions |grep cus
+$ kubectl api-versions |grep custom
 custom.metrics.k8s.io/v1beta1
 ```
 
@@ -60,12 +64,13 @@ kubectl get svc --all-namespaces
 ```
 
 
-The external metric name is `mongo-queue`:
+Check the external metric `mongo-queue` by:
 ```
 kubectl get --raw /apis/external.metrics.k8s.io/v1beta1/namespaces/default/mongo-queue
 ```
 
 Build flask service:
 
-1. `kubectl apply -f scaler/flask.yaml` - flask
-2. `kubectl apply -f scaler/horizontalpodautoscaler.yaml` - HPA
+`kubectl apply -f scaler/flask.yaml` - flask  
+`kubectl apply -f scaler/horizontalpodautoscaler-custom-metric.yaml` - HPA based on custom metrics  
+`kubectl apply -f scaler/horizontalpodautoscaler-external-metric.yaml` - HPA based on external metrics  
