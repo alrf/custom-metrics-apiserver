@@ -17,8 +17,6 @@ spec:
       name: custom-metrics-apiserver
     spec:
       serviceAccountName: custom-metrics-apiserver
-      nodeSelector:
-        kubernetes.io/role: master
       containers:
       - name: custom-metrics-apiserver
         image: alrf/custom-metrics-apiserver-amd64:latest
