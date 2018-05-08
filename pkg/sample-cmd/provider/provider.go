@@ -19,6 +19,8 @@ package provider
 import (
 	"fmt"
 	"time"
+	"os"
+//	"strconv"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 
@@ -100,8 +102,14 @@ var (
 	}
 )
 
+func getEnv(key, fallback string) string {
+    if value, ok := os.LookupEnv(key); ok {
+	return value
+    }
+    return fallback
+}
 
-type Person struct {
+type Dummy struct {
     ID        bson.ObjectId `bson:"_id,omitempty"`
     Name      string
     Value     int64
@@ -109,11 +117,18 @@ type Person struct {
 }
 
 var (
-    IsDrop = false
+    MongoDB = getEnv("MONGO_DB", "solariat_bottle")
+    MongoCollection = getEnv("MONGO_COLLECTION", "jobs")
+    MongoRequest = getEnv("MONGO_REQUEST", "bson.M{\"name\": \"Var1\"}")
+    MongoTest = getEnv("MONGO_TEST", "true")
 )
 
 func getMongoQueue() int64 {
-//    var x int64 = 777
+
+    fmt.Println("MONGO_DB:", MongoDB)
+    fmt.Println("MONGO_COLLECTION:", MongoCollection)
+    fmt.Println("MONGO_REQUEST:", MongoRequest)
+    fmt.Println("MONGO_TEST:", MongoTest)
 
     session, err := mgo.Dial("mongo.default.svc.cluster.local:27017")
     if err != nil {
@@ -123,49 +138,58 @@ func getMongoQueue() int64 {
 
     session.SetMode(mgo.Monotonic, true)
 
-    // Drop Database
-    if IsDrop {
-	err = session.DB("test").DropDatabase()
+    if MongoTest == "true" {
+	// Drop Database
+	err = session.DB(MongoDB).DropDatabase()
 	if err != nil {
 	    panic(err)
 	}
     }
 
-    // Collection People
-    c := session.DB("test").C("people")
-    // Index
-    index := mgo.Index{
-	Key:        []string{"name", "value"},
-	Unique:     true,
-	DropDups:   true,
-	Background: true,
-	Sparse:     true,
-    }
+    // Collection
+    c := session.DB(MongoDB).C(MongoCollection)
 
-    err = c.EnsureIndex(index)
-    if err != nil {
-	panic(err)
-    }
+    if MongoTest == "true" {
+        // Index
+	index := mgo.Index{
+	    Key:        []string{"name", "value"},
+	    Unique:     true,
+	    DropDups:   true,
+	    Background: true,
+	    Sparse:     true,
+        }
 
-    if IsDrop {
-	// Insert Datas
-	err = c.Insert(&Person{Name: "Ale", Value: 555, Timestamp: time.Now()},
-		&Person{Name: "Cla", Value: 777, Timestamp: time.Now()})
+	err = c.EnsureIndex(index)
 	if err != nil {
+	    panic(err)
+	}
+
+	count, err := c.Find(bson.M{}).Count()
+	if err != nil {
+	    panic(err)
+	}
+
+	if count == 0 {
+	    // Insert Datas
+	    err = c.Insert(&Dummy{Name: "Var1", Value: 555, Timestamp: time.Now()},
+		    &Dummy{Name: "Var2", Value: 777, Timestamp: time.Now()})
+	    if err != nil {
 		panic(err)
+	    }
 	}
     }
 
-    // Query One
-    result := Person{}
-    err = c.Find(bson.M{"name": "Ale"}).One(&result)
+    result := Dummy{}
+    err = c.Find(MongoRequest).One(&result)
     if err != nil {
         panic(err)
     }
+
     fmt.Println("!!!!!!!")
-    fmt.Println("Value all", result)
+    fmt.Println("Object", result)
     fmt.Println("Value", result.Value)
     fmt.Println("!!!!!!!")
+
     return result.Value
 }
 

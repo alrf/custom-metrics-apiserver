@@ -21,6 +21,15 @@ spec:
       - name: custom-metrics-apiserver
         image: alrf/custom-metrics-apiserver-amd64:latest
         imagePullPolicy: Always
+        env:
+        - name: MONGO_DB
+          value: "testdb"
+        - name: MONGO_COLLECTION
+          value: "testcollection"
+        - name: MONGO_TEST
+          value: "false"
+        - name: MONGO_REQUEST
+          value: "bson.M{\"name\": \"Var1\"}"
         # command: [ "/bin/sh", "-c", "--" ]
         # args: [ "while true; do sleep 30; done;" ]
         args:
@@ -29,7 +38,7 @@ spec:
         - --tls-cert-file=/var/run/serving-cert/tls.crt
         - --tls-private-key-file=/var/run/serving-cert/tls.key
         - --logtostderr=true
-        - --v=8
+        - --v=2
         ports:
         - containerPort: 6443
         volumeMounts:
