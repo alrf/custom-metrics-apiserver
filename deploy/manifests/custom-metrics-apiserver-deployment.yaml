@@ -27,9 +27,7 @@ spec:
         - name: MONGO_COLLECTION
           value: "testcollection"
         - name: MONGO_TEST
-          value: "false"
-        - name: MONGO_REQUEST
-          value: "bson.M{\"name\": \"Var1\"}"
+          value: "true"
         # command: [ "/bin/sh", "-c", "--" ]
         # args: [ "while true; do sleep 30; done;" ]
         args:

@@ -20,7 +20,6 @@ import (
 	"fmt"
 	"time"
 	"os"
-//	"strconv"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 
@@ -119,7 +118,6 @@ type Dummy struct {
 var (
     MongoDB = getEnv("MONGO_DB", "solariat_bottle")
     MongoCollection = getEnv("MONGO_COLLECTION", "jobs")
-    MongoRequest = getEnv("MONGO_REQUEST", "bson.M{\"name\": \"Var1\"}")
     MongoTest = getEnv("MONGO_TEST", "true")
 )
 
@@ -127,7 +125,6 @@ func getMongoQueue() int64 {
 
     fmt.Println("MONGO_DB:", MongoDB)
     fmt.Println("MONGO_COLLECTION:", MongoCollection)
-    fmt.Println("MONGO_REQUEST:", MongoRequest)
     fmt.Println("MONGO_TEST:", MongoTest)
 
     session, err := mgo.Dial("mongo.default.svc.cluster.local:27017")
@@ -138,6 +135,7 @@ func getMongoQueue() int64 {
 
     session.SetMode(mgo.Monotonic, true)
 
+/*
     if MongoTest == "true" {
 	// Drop Database
 	err = session.DB(MongoDB).DropDatabase()
@@ -145,6 +143,7 @@ func getMongoQueue() int64 {
 	    panic(err)
 	}
     }
+*/
 
     // Collection
     c := session.DB(MongoDB).C(MongoCollection)
@@ -180,7 +179,7 @@ func getMongoQueue() int64 {
     }
 
     result := Dummy{}
-    err = c.Find(MongoRequest).One(&result)
+    err = c.Find(bson.M{"name": "Var1"}).One(&result)
     if err != nil {
         panic(err)
     }
