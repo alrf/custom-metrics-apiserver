@@ -74,3 +74,19 @@ Build flask service:
 `kubectl apply -f scaler/flask.yaml` - flask  
 `kubectl apply -f scaler/horizontalpodautoscaler-custom-metric.yaml` - HPA based on custom metrics  
 `kubectl apply -f scaler/horizontalpodautoscaler-external-metric.yaml` - HPA based on external metrics  
+
+How to update value in Mongo:
+```
+rs0:PRIMARY> use testdb
+switched to db testdb
+rs0:PRIMARY> db.testcollection.find()
+{ "_id" : ObjectId("5af1a863ec0f08892f32605a"), "name" : "Var1", "value" : NumberLong(555), "timestamp" : ISODate("2018-05-08T13:38:43.138Z") }
+{ "_id" : ObjectId("5af1a863ec0f08892f32605b"), "name" : "Var2", "value" : NumberLong(777), "timestamp" : ISODate("2018-05-08T13:38:43.138Z") }
+rs0:PRIMARY> 
+rs0:PRIMARY> db.testcollection.updateOne({"name":"Var1"}, { $set: { "value" : NumberLong(333) } })
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+rs0:PRIMARY> db.testcollection.find()
+{ "_id" : ObjectId("5af1a863ec0f08892f32605a"), "name" : "Var1", "value" : NumberLong(333), "timestamp" : ISODate("2018-05-08T13:38:43.138Z") }
+{ "_id" : ObjectId("5af1a863ec0f08892f32605b"), "name" : "Var2", "value" : NumberLong(777), "timestamp" : ISODate("2018-05-08T13:38:43.138Z") }
+rs0:PRIMARY> 
+```
